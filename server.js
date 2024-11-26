@@ -5,6 +5,8 @@ const { errorHandler } = require("./middlewares/errorHandler");
 const connectDB = require('./config/database');
 const session = require("express-session");
 const dotenv = require("dotenv")
+const MongoStore = require("connect-mongo");
+
 dotenv.config();
 
 
@@ -35,12 +37,19 @@ app.use("/foodskill/cashier", cashierRoutes);
 // Start express-session middleware
 
 app.use(
+  // session({
+  //   secret: "your_secret_key", // Replace with a secure key
+  //   resave: false, // Avoid resaving unchanged sessions
+  //   saveUninitialized: true, // Save session even if it's not modified
+  //   cookie: { secure: false, maxAge: 3600000 }, // 1-hour session
+  // })
   session({
-    secret: "your_secret_key", // Replace with a secure key
-    resave: false, // Avoid resaving unchanged sessions
-    saveUninitialized: true, // Save session even if it's not modified
+    secret: "your_secret_key", // Replace with your secret key
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: "mongodb://localhost:27017/sessionDB" }), // Replace with your MongoDB connection string
     cookie: { secure: false, maxAge: 3600000 }, // 1-hour session
-  })
+})
 );
 
 

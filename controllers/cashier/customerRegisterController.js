@@ -8,6 +8,7 @@ const Customer = require("../../models/cashier/customerModel");
 exports.registerCustomer = asyncHandler(async (req, res) => {
     
   const { customer_name, customer_mobile_no, customer_email } = req.body;
+  
 
   if (!customer_name || !customer_mobile_no) {
     return res.status(400).json({ message: "All fields are required" });

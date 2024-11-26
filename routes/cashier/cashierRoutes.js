@@ -22,31 +22,31 @@ router.post('/register', registerController.register);
 router.post('/login', loginController.loginUser);
 
 // Customer Register (Protected Routes)
-router.post('/customer/register',validateToken, customerRegisterController.registerCustomer);
+router.post('/customer/register',protectedRoute,validateToken, customerRegisterController.registerCustomer);
 
 // Menu (Protected Routes)
 router.post('/customer/menu',protectedRoute, validateToken, customerMenuController.createMenu);
 router.get('/customer/allmenu',protectedRoute, validateToken, customerMenuController.getAllMenus);
 
 // Floor (Protected Routes)
-router.post('/restaurant/createFloor', validateToken, floorController.createFloor);
-router.get('/restaurant/getallFloor', validateToken, floorController.getAllFloors);
+router.post('/restaurant/createFloor',protectedRoute, validateToken, floorController.createFloor);
+router.get('/restaurant/getallFloor',protectedRoute, validateToken, floorController.getAllFloors);
 
 // Table (Protected Routes)
-router.post('/restaurant/createTable', validateToken, tableController.createTable);
-router.get('/restaurant/getTable', validateToken, tableController.getAllTable);
+router.post('/restaurant/createTable',protectedRoute, validateToken, tableController.createTable);
+router.get('/restaurant/getTable',protectedRoute, validateToken, tableController.getAllTable);
 
 // Order (Protected Routes)
-router.post('/restaurant/create/order', validateToken, orderController.createOrder);
+router.post('/restaurant/create/order',protectedRoute, validateToken, orderController.createOrder);
 router.get('/restaurant/create/getallorder', validateToken, orderController.getAllOrders);
 
 // Billing (Protected Routes)
-router.post('/restaurant/billing/order', validateToken, billingController.billingOrder);
-router.get('/restaurant/billing/getallorder', validateToken, billingController.getAllBillings);
+router.post('/restaurant/billing/order',protectedRoute, validateToken, billingController.billingOrder);
+router.get('/restaurant/billing/getallorder',protectedRoute, validateToken, billingController.getAllBillings);
 
 // Payment (Protected Routes)
-router.post('/restaurant/payment/order', validateToken, paymentController.paymentOrder);
-router.get('/restaurant/payment/getallorder', validateToken, paymentController.getAllPayments);
+router.post('/restaurant/payment/order',protectedRoute, validateToken, paymentController.paymentOrder);
+router.get('/restaurant/payment/getallorder',protectedRoute, validateToken, paymentController.getAllPayments);
 
 // Get Current User (Protected Route)
 router.get('/current', currentController.currentUser);
