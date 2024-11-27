@@ -10,12 +10,13 @@ exports.protectedRoute = asyncHandler(async (req, res, next) => {
 
     // Check if session token is provided in headers
     const sessionToken = req.headers.session;
+    
     if (!sessionToken) {
         return res.status(401).json({ message: "Session token is missing" });
     }
 
     // Check if the session token exists in the database
-    const sessionExists = await Session.findOne({ token: sessionToken });
+    const sessionExists = await Session.findOne({ session: sessionToken });
     if (!sessionExists) {
         return res.status(401).json({ message: "Session token is invalid" });
     }

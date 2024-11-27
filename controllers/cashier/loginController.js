@@ -33,8 +33,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
   const newSession = new Session({
     session,
     userId: user._id,
-    // username: user.fullname,
-    // role: user.role,
   });
   // Save the session to the database
   await newSession.save();

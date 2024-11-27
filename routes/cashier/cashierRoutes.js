@@ -38,7 +38,7 @@ router.get('/restaurant/getTable',protectedRoute, validateToken, tableController
 
 // Order (Protected Routes)
 router.post('/restaurant/create/order',protectedRoute, validateToken, orderController.createOrder);
-router.get('/restaurant/create/getallorder', validateToken, orderController.getAllOrders);
+router.get('/restaurant/create/getallorder',protectedRoute, validateToken, orderController.getAllOrders);
 
 // Billing (Protected Routes)
 router.post('/restaurant/billing/order',protectedRoute, validateToken, billingController.billingOrder);
