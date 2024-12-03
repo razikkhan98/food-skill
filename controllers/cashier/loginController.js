@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../../models/cashier/registerModel");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
-const Session = require("../../models/session/sessionModel"); 
+const Session = require("../../models/session/sessionModel");
 
 // Login user
 // POST /foodskill/register
@@ -37,13 +37,11 @@ exports.loginUser = asyncHandler(async (req, res) => {
   // Save the session to the database
   await newSession.save();
 
-
-
   // Generate and send JWT token
   const token = jwt.sign(
     { user: { username: user.fullname, email: user.email, id: user._id } },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "30 day" }
   );
 
   // If the user is found, login is successful

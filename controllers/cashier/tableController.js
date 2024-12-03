@@ -11,7 +11,8 @@ exports.createTable = asyncHandler(async (req, res) => {
   if (!tableName || !tableNumber || !floorChairs || !floorId) {
     res.status(400).json({
       success: false,
-      message: "Please provide all required fields: tableName, tableNumber, floorChairs, floorId.",
+      message:
+        "Please provide all required fields: tableName, tableNumber, floorChairs, floorId.",
     });
     return;
   }
@@ -53,30 +54,30 @@ exports.createTable = asyncHandler(async (req, res) => {
 // Get all tables
 // GET foodskill/restaurant/tables
 exports.getAllTable = asyncHandler(async (req, res) => {
-    try {
-        const tables = await Table.aggregate([
-          {
-            $lookup: {
-              from: "floors", // The collection name for the Floor model
-              localField: "floorId", // The field in the Table model
-              foreignField: "_id", // The field in the Floor model
-              as: "floorDetails", // Alias for the joined data
-            },
-          },
-          {
-            $unwind: "$floorDetails", // Unwind to deconstruct the floorDetails array
-          },
-        ]);
-    
-        res.status(200).json({
-          success: true,
-          total_tables: tables.length,
-          data: tables,
-        });
-      } catch (err) {
-        res.status(500).json({
-          success: false,
-          message: err.message,
-        });
-      }
+  try {
+    const tables = await Table.aggregate([
+      {
+        $lookup: {
+          from: "floors", // The collection name for the Floor model
+          localField: "floorId", // The field in the Table model
+          foreignField: "_id", // The field in the Floor model
+          as: "floorDetails", // Alias for the joined data
+        },
+      },
+      {
+        $unwind: "$floorDetails", // Unwind to deconstruct the floorDetails array
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      total_tables: tables.length,
+      data: tables,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });

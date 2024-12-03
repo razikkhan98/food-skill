@@ -1,16 +1,11 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  menuId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Menu",
-    required: true,
+  orderDetails: {
+    type: Array,
+    default: [],
   },
-  orderQuantity: {
-    type: Number,
-    required: true,
-    min: 1,
-  },
+
   orderStatus: {
     type: String,
     enum: ["Pending", "In Progress", "Completed", "Cancelled"],
@@ -24,7 +19,7 @@ const orderSchema = new mongoose.Schema({
   floorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Floor",
-    required: true,
+    required: false, // Optional for non-Dine-In orders
   },
   tableId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -48,5 +43,3 @@ const orderSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Order", orderSchema);
-
-
