@@ -8,11 +8,11 @@ exports.createTable = asyncHandler(async (req, res) => {
   const { tableName, tableNumber, tableChairs, floorId } = req.body;
 
   // Validation
-  if (!tableName || !tableNumber || !floorChairs || !floorId) {
+  if (!tableName || !tableNumber || !tableChairs || !floorId) {
     res.status(400).json({
       success: false,
       message:
-        "Please provide all required fields: tableName, tableNumber, floorChairs, floorId.",
+        "Please provide all required fields: tableName, tableNumber, tableChairs, floorId.",
     });
     return;
   }
@@ -28,7 +28,10 @@ exports.createTable = asyncHandler(async (req, res) => {
   }
 
   // Check if the table number is already in use
-  const existingTable = await Table.findOne({ tableNumber });
+  const existingTable = await Table.findOne({
+    tableNumber,
+    floorId: floor?._id,
+  });
   if (existingTable) {
     res.status(400).json({
       success: false,
@@ -38,10 +41,10 @@ exports.createTable = asyncHandler(async (req, res) => {
   }
 
   // Create the new table
-  const newTable = await Table.create({
+   await Table.create({
     tableName,
     tableNumber,
-    floorChairs,
+    tableChairs,
     floorId,
   });
 

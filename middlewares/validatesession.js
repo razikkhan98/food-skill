@@ -7,7 +7,7 @@ const Session = require("../models/session/sessionModel"); // Replace with your 
 
 // Middleware to validate session tokens
 exports.protectedRoute = asyncHandler(async (req, res, next) => {
-    console.log('req: ', req);
+    
 
     // Check if session token is provided in headers
     const sessionToken = req.headers.session || req.headers.Session;

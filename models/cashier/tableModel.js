@@ -8,7 +8,6 @@ const tableSchema = mongoose.Schema(
     },
     tableNumber: {
       type: Number,
-      unique: true,
       required: [true, "Table number is required"],
     },
     tableChairs: {
