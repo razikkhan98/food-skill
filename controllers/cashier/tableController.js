@@ -89,7 +89,7 @@ exports.getAllTable = asyncHandler(async (req, res) => {
       },
     ]);
 
-    console.log("tables: ", tables);
+    
     res.status(200).json({
       success: true,
       total_tables: tables.length,
@@ -121,7 +121,7 @@ exports.updateTableStatusById = asyncHandler(async (req, res) => {
     { $set: { tableStatus } },
     { new: true }
   );
-  console.log("updateTableStatus: ", updateTableStatus);
+  
 
   res.status(201).json({
     success: true,
