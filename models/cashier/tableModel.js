@@ -14,6 +14,16 @@ const tableSchema = mongoose.Schema(
       type: Number,
       required: [true, "Number of chairs is required"],
     },
+    tableStatus: {
+      type: String,
+      enum: ["Cancelled", "Reserved", "Available", "Completed"],
+    },
+
+    customerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer", // Reference to the Customer schema
+    },
+
     floorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Floor", // Reference to the Floor schema

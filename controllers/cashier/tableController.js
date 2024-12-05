@@ -41,7 +41,7 @@ exports.createTable = asyncHandler(async (req, res) => {
   }
 
   // Create the new table
-   await Table.create({
+  await Table.create({
     tableName,
     tableNumber,
     tableChairs,
@@ -68,10 +68,28 @@ exports.getAllTable = asyncHandler(async (req, res) => {
         },
       },
       {
-        $unwind: "$floorDetails", // Unwind to deconstruct the floorDetails array
+        $lookup: {
+          from: "customers", // The collection name for the Customer model
+          localField: "customerId", // The field in the Table model
+          foreignField: "_id", // The field in the Customer model
+          as: "customerDetails", // Alias for the joined data
+        },
+      },
+      {
+        $unwind: {
+          path: "$floorDetails",
+          preserveNullAndEmptyArrays: true, // Keep documents without matching floorDetails
+        },
+      },
+      {
+        $unwind: {
+          path: "$customerDetails",
+          preserveNullAndEmptyArrays: true, // Keep documents without matching customerDetails
+        },
       },
     ]);
 
+    console.log("tables: ", tables);
     res.status(200).json({
       success: true,
       total_tables: tables.length,
@@ -83,4 +101,30 @@ exports.getAllTable = asyncHandler(async (req, res) => {
       message: err.message,
     });
   }
+});
+
+// POST foodskill/restaurant/updateTableStatus
+exports.updateTableStatusById = asyncHandler(async (req, res) => {
+  const { tableId, tableStatus } = req.body;
+
+  // Validation
+  if (!tableId || !tableStatus) {
+    res.status(400).json({
+      success: false,
+      message: "Please provide all required fields: tableId.",
+    });
+    return;
+  }
+
+  const updateTableStatus = await Table.findByIdAndUpdate(
+    { _id: tableId },
+    { $set: { tableStatus } },
+    { new: true }
+  );
+  console.log("updateTableStatus: ", updateTableStatus);
+
+  res.status(201).json({
+    success: true,
+    message: "Table update successfully",
+  });
 });
