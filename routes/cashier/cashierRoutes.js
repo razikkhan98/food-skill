@@ -27,6 +27,14 @@ router.post(
   validateToken,
   customerRegisterController.registerCustomer
 );
+// Customer AllRegister (Protected Routes)
+
+router.get(
+  "/restaurant/allCustomer",
+  protectedRoute,
+  validateToken,
+  customerRegisterController.getAllCustomers
+);
 
 // Menu (Protected Routes)
 router.post(

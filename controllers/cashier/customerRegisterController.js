@@ -49,3 +49,14 @@ exports.registerCustomer = asyncHandler(async (req, res) => {
     res.status(500).json({ message: "Database error", error: error.message });
   }
 });
+
+// Get All Customer
+
+exports.getAllCustomers = asyncHandler(async (req, res) => {
+  try {
+    const customers = await Customer.find({});
+    res.status(200).json({ success: true, data: customers });
+  } catch (error) {
+    res.status(500).json({ message: "Database error", error: error.message });
+  }
+});
